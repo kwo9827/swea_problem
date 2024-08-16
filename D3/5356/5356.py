@@ -1,3 +1,4 @@
+# 의석이의 세로로 말해요
 import sys
 sys.stdin = open('input.txt')
 
@@ -12,12 +13,13 @@ for tc in range(1,T+1):
         lst.append(arr)
 
     words =[]
-    for c in range(5):
-        for r in range(15):
+    for c in range(15):
+        for r in range(5):
             if lst[r][c]==-1:
                 continue
             else:
-                words.append(lst[c][r])
+                words.append(lst[r][c])
 
-    print(words)
+    result = ''.join(words)
+    print(f'#{tc} {result}')
 
