@@ -14,16 +14,19 @@ for tc in range(1,T+1):
 
     for r in range(N):
         for c in range(N):
-            for k in range(4):   # 우, 우하, 하, 좌하 확인
-                cont = 0  # 연속한 돌의 수
-                for i in range(5):  # 본인포함 5개까지 확인
+            for k in range(4):
+                cont = 0
+                for i in range(5):
                     nr = r + dr[k] * i
                     nc = c + dc[k] * i
-                    if 0<=nr<N and 0<=nc<N and arr[nr][nc] == 'o':
+                    if 0 <= nr < N and 0 <= nc < N and arr[nr][nc] == 'o':
                         cont += 1
                         if cont >= 5:
                             result = 'YES'
                             break
+                    else:
+                        cont = 0
 
     print(f'#{tc} {result}')
+
 
