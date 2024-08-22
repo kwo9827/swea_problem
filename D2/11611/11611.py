@@ -44,11 +44,10 @@ for tc in range(1,T+1):
         global min_sum
         if min_sum <= cur_sum:  # 가지치기
             return
-        if k == N:       # 모든 행과 열을 돌았으면 멈춘다
+        if k == N:   # 모든 행과 열을 돌았으면 멈춘다
             min_sum = cur_sum
-
         else:
-            for i in range(N):
+            for i in range(N): # 0,1,2 까지만
                 if used[i]:
                     continue
                 used[i] = 1

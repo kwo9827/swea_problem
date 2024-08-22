@@ -7,7 +7,7 @@ T = int(input())
 for tc in range(1, T + 1):
     N, K = map(int, input().split())  # N: 부분집합의 원소 수, K: 부분집합의 합
     lst = list(range(1, 13))  # 1~12 리스트
-    total_count = 0  # 총개수
+    total_count = 0  # 총 개수
 
     def perm(k, cur_sum, count):
         global total_count
