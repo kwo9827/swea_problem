@@ -6,12 +6,27 @@ T = int(input())
 
 for tc in range(1,T+1):
     N = int(input())
+    tmp =[]    # 출력할 리스트
+    A = []  # 중간에 저장할 리스트
 
-    arr = [[1] * N for _ in range(N)]
+    print(f'#{tc}')
 
-    arr[0][0] = 1
+    for step in range(N):
+        if step == 0:
+            tmp =[1]
+
+        else:
+            tmp =[1]
+            for idx in range(1,step):
+                tmp.append(A[idx-1]+A[idx])
+            tmp+=[1]
+
+        print(*tmp)
+        A = tmp
 
 
 
-    for row in arr:
-        print(*row)
+
+
+
+
