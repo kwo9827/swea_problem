@@ -29,7 +29,6 @@ for tc in range(1,T+1):
         for j in range(1,9,3):
             for r in range(3):
                 for c in range(3):
-
                     lst[arr[r][c]] = 1
         if sum(lst) != 9:
             result = 0

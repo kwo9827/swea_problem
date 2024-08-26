@@ -9,7 +9,7 @@ for tc in range(1,T+1):
     lst = []
     for _ in range(N):
         a,b = map(int,input().split())
-        lst.append((a,b))
+        lst.append((a,b))       # 저장할 때 세트로 저장함
 
     cont = 0
 
@@ -18,7 +18,7 @@ for tc in range(1,T+1):
             A1,B1 = lst[i]
             A2,B2 = lst[j]
 
-            if (A1<A2 and B1>B2) or (A1>A2 and B1<B2):
+            if (A1<A2 and B1>B2) or (A1>A2 and B1<B2):   # 겹칠 경우
                 cont += 1
 
     print(f'#{tc} {cont}')

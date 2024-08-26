@@ -1,44 +1,27 @@
 import sys
 sys.stdin = open('input.txt')
 
-def DFS(V):
-    s = 0  # 시작점
-    G = 99  # 도착점
+T = int(input())
+
+for tc in range(1, T + 1):
+    string = list(input().strip())
+    N = len(string)  # 문자열 길이
+
     stack = []
-    visited = [0] * (V+1)
-    visited[s] = 1
-    v = s
-    result = 0
+    total_pieces = 0
 
-    while True:
-        for w in adjL[v]:
-            if w == G:
-                result = 1
-                return result
-
-            if visited[w] == 0:
-                stack.append(v)
-                v = w
-                visited[w] = 1
-                break
-
-        else:
-            if stack:
-                v = stack.pop()
-
+    i = 0
+    while i < N:
+        if string[i] == '(':
+            # 레이저인지 쇠막대기 시작인지 판별
+            if string[i + 1] == ')':  # 레이저일 경우
+                total_pieces += len(stack)  # 현재 스택에 쌓여있는 쇠막대기 개수만큼 더하기
+                i += 1  # 레이저이기 때문에 다음 괄호로 넘기기
             else:
-                break
+                stack.append('(')  # 쇠막대기 시작
+        else:
+            stack.pop()  # 쇠막대기 끝
+            total_pieces += 1  # 쇠막대기 끝을 만나면 조각 수 1 증가
+        i += 1
 
-    return result
-
-for tc in range(1,11):
-    T, V = map(int,input().split())
-    arr = list(map(int,input().split()))
-    adjL = [[] for _ in range(V+1)]
-
-    for i in range(V):
-        v1,v2 = arr[i*2],arr[i*2+1]
-        adjL[v1].append(v2)
-
-    print(f'#{tc} {DFS(V)}')
-
+    print(f'#{tc} {total_pieces}')
