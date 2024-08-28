@@ -8,11 +8,22 @@ def bst(node):
     if node > N:
         return 0
 
-    if tree[node] > 0:
-        return tree[node]
+    # if tree[node] > 0:
+    #     return tree[node]
 
-    if tree[node].isdigit() == False:
-        pass
+    if tree[node] in '+-/*':
+        if tree[node] == '+':
+            tree[node] = tree[node*2] + tree[node*2+1]
+            return tree[node]
+        if tree[node] == '-':
+            tree[node] = tree[node*2] - tree[node*2+1]
+            return tree[node]
+        if tree[node] == '/':
+            tree[node] = tree[node*2] / tree[node*2+1]
+            return tree[node]
+        if tree[node] == '*':
+            tree[node] = tree[node*2] * tree[node*2+1]
+            return tree[node]
 
 
     bst(node*2)
