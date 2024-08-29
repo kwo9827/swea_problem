@@ -1,6 +1,6 @@
 #12916 트리_이진힙_확인용
 import sys
-sys.stdin = open('input.txt')
+sys.stdin = open('input.txt',"r")
 
 from heapq import heappush, heappop, heapify
 

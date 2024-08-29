@@ -1,44 +1,41 @@
 #1232 9일차_사칙연산
 import sys
-sys.stdin = open('input.txt')
+sys.stdin = open('input.txt', "r")
 
-from heapq import heappush,heappop,heapify
+def Tree(v):
+    if tree[v] not in ['+','-','*','/']:
+        return tree[v]
 
-def bst(node):
-    if node > N:
-        return 0
+    left = Tree(L[v])
+    right = Tree(R[v])
 
-    # if tree[node] > 0:
-    #     return tree[node]
-
-    if tree[node] in '+-/*':
-        if tree[node] == '+':
-            tree[node] = tree[node*2] + tree[node*2+1]
-            return tree[node]
-        if tree[node] == '-':
-            tree[node] = tree[node*2] - tree[node*2+1]
-            return tree[node]
-        if tree[node] == '/':
-            tree[node] = tree[node*2] / tree[node*2+1]
-            return tree[node]
-        if tree[node] == '*':
-            tree[node] = tree[node*2] * tree[node*2+1]
-            return tree[node]
-
-
-    bst(node*2)
-    print(node, end=" ")
-    bst(node*2+1)
-
+    if tree[v] == '+':
+        tree[v] = left + right
+    elif tree[v] == '-':
+        tree[v] = left - right
+    elif tree[v] == '/':
+        tree[v] = left / right
+    elif tree[v] == '*':
+        tree[v] = left * right
+    return tree[v]
 
 for tc in range(1,11):
     N = int(input())
+
     tree = [0] * (N+1)
+    L = [0] * (N+1)
+    R = [0] * (N+1)
+
     for _ in range(N):
-        arr = list((input().split()))
+        arr = input().split()
         node = int(arr[0])
-        tree[node]= arr[1]
 
+        if len(arr) == 4:
+            tree[node] = arr[1]
+            L[node] = int(arr[2])
+            R[node] = int(arr[3])
+        else:
+            tree[node] = int(arr[1])
 
-    bst(1)
-    print(tree)
+    Tree(1)
+    print(f'#{tc} {int(tree[1])}')
