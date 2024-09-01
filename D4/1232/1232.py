@@ -2,40 +2,38 @@
 import sys
 sys.stdin = open('input.txt', "r")
 
-def Tree(v):
-    if tree[v] not in ['+','-','*','/']:
-        return tree[v]
+def dfs(v):
+    if P[v] not in ['+','-','/','*']:
+        return int(P[v])
 
-    left = Tree(L[v])
-    right = Tree(R[v])
+    else:
+        if P[v] == '+':
+            P[v] = dfs(L[v]) + dfs(R[v])
+        if P[v] == '-':
+            P[v] = dfs(L[v]) - dfs(R[v])
+        if P[v] == '*':
+            P[v] = dfs(L[v]) * dfs(R[v])
+        if P[v] == '/':
+            P[v] = dfs(L[v]) / dfs(R[v])
 
-    if tree[v] == '+':
-        tree[v] = left + right
-    elif tree[v] == '-':
-        tree[v] = left - right
-    elif tree[v] == '/':
-        tree[v] = left / right
-    elif tree[v] == '*':
-        tree[v] = left * right
-    return tree[v]
+    return int(P[v])
 
 for tc in range(1,11):
     N = int(input())
-
-    tree = [0] * (N+1)
-    L = [0] * (N+1)
-    R = [0] * (N+1)
-
+    P = [0] * (N + 1)
+    L = [0] * (N + 1)
+    R = [0] * (N + 1)
     for _ in range(N):
-        arr = input().split()
+        arr = list(map(str,input().split()))
         node = int(arr[0])
-
         if len(arr) == 4:
-            tree[node] = arr[1]
             L[node] = int(arr[2])
             R[node] = int(arr[3])
+            P[node] = arr[1]
         else:
-            tree[node] = int(arr[1])
+            P[node] = arr[1]
 
-    Tree(1)
-    print(f'#{tc} {int(tree[1])}')
+    dfs(1)
+    print(f'#{tc} {int(P[1])}')
+
+
