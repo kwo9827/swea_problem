@@ -1,17 +1,14 @@
-# -----------
 path = []
 
-
-def kfc(x, sum):
+def kfc(x,sum):
     if x == 3:
-        if sum > 10:
+        if sum >= 10:
             print(f'{path} = {sum}')
         return
 
-    for i in range(1, 7):
+    for i in range(1,7):
         path.append(i)
-        kfc(x + 1, sum + i)
+        kfc(x+1,sum+i)
         path.pop()
 
-
-kfc(0, 0)
+kfc(0,0)
