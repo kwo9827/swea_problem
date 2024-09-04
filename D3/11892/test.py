@@ -1,34 +1,35 @@
-arr = [3, 2, 4, 6, 9, 1, 8, 7, 5]
+import sys
+sys.stdin = open('input.txt')
 
-def hoare_partition1(left, right):
-    pivot = arr[left]  # 피벗을 제일 왼쪽 요소로 설정
+def horae(left,right):
+    pivot = arr[left]
     i = left + 1
     j = right
-
-    result = arr
 
     while i <= j:
         while i <= j and arr[i] <= pivot:
             i += 1
-
         while i <= j and arr[j] >= pivot:
             j -= 1
-
         if i < j:
-            arr[i], arr[j] = arr[j], arr[i]
-    a = arr[j]
-    arr[left], arr[j] = arr[j], arr[left]
+            arr[i],arr[j] = arr[j],arr[i]
+
+    arr[left],arr[j] = arr[j],arr[left]
 
     return j
 
-def quick_sort(left, right):
+def quick(left,right):
     if left < right:
-        pivot = hoare_partition1(left, right)
-        # pivot = hoare_partition2(left, right)
-        # pivot = hoare_partition3(left, right)
-        quick_sort(left, pivot - 1)
-        quick_sort(pivot + 1, right)
+        pivot = horae(left,right)
+        quick(left,pivot-1)
+        quick(pivot+1,right)
 
+T = int(input())
 
-quick_sort(0, len(arr) - 1)
-print(arr)
+for tc in range(1,T+1):
+    N = int(input())
+    arr = list(map(int,input().split()))
+
+    quick(0,N-1)
+
+    print(f'#{tc} {arr[N//2]}')

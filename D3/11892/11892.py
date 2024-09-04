@@ -7,8 +7,6 @@ def hoare_partition1(left, right):
     i = left + 1
     j = right
 
-    result = arr
-
     while i <= j:
         while i <= j and arr[i] <= pivot:
             i += 1
@@ -18,7 +16,7 @@ def hoare_partition1(left, right):
 
         if i < j:
             arr[i], arr[j] = arr[j], arr[i]
-    a = arr[j]
+
     arr[left], arr[j] = arr[j], arr[left]
 
     return j
@@ -26,8 +24,6 @@ def hoare_partition1(left, right):
 def quick_sort(left, right):
     if left < right:
         pivot = hoare_partition1(left, right)
-        # pivot = hoare_partition2(left, right)
-        # pivot = hoare_partition3(left, right)
         quick_sort(left, pivot - 1)
         quick_sort(pivot + 1, right)
 

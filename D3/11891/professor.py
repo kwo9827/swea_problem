@@ -1,29 +1,53 @@
-arr = [69, 10, 30, 2, 16, 8, 32, 21]
-
+import sys
+sys.stdin = open('input.txt')
 
 def merge_sort(lst):
     if len(lst) <= 1:
         return lst
 
-    mid = len(lst) >> 1  # len(lst) // 2
-    left = merge_sort(lst[:mid])
-    right = merge_sort(lst[mid:])
+    mid = len(lst) // 2
 
-    # 병합
-    ret = []  # left + right를 정렬된 상태로 합쳐서 저장
-    while left and right:  # left나 right 중에 하나라도 텅 비어있게 될 때까지 반복
-        if left[0] < right[0]:
-            ret.append(left.pop(0))
+    left = lst[:mid]
+    right = lst[mid:]
+
+    left = merge_sort(left)
+    right = merge_sort(right)
+
+    return merge(left,right)
+
+def merge(left,right):
+    global cont
+    result = [0] * (len(left) + len(right))
+    l = r = 0   # 인덱스값
+
+    if left[-1] > right[-1]:
+        cont += 1
+
+    while l < len(left) and r < len(right):
+        if left[l] < right[r]:
+            result[l+r] = left[l]
+            l += 1
         else:
-            ret.append(right.pop(0))
+            result[l+r] = right[r]
+            r += 1
 
-    # 아직 리스트에 남아있는 원소들 있다면 마저 ret에 넣어주기
-    ret.extend(left)  # ret + left
-    ret.extend(right)  # ret + right
+    while l < len(left):
+        result[l+r] = left[l]
+        l += 1
 
-    return ret
+    while r < len(right):
+        result[l+r] = right[r]
+        r += 1
 
+    return result
 
-print(arr)
-sorted_lst = merge_sort(arr)
-print(sorted_lst)
+T = int(input())
+
+for tc in range(1,T+1):
+    N = int(input())
+    arr = list(map(int,input().split()))
+
+    cont = 0
+    arr = merge_sort(arr)
+
+    print(f'#{tc} {arr[N//2]} {cont}')
