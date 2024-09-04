@@ -2,24 +2,36 @@
 import sys
 sys.stdin = open('input.txt')
 
-def kfc(string,N,cur_val):
-    global max_val, cont
-    if cont == N:
-        return
-
-    for i in range(len(string)):
-        pass
-
-
 T = int(input())
 
-for tc in range(1,T+1):
-    string, N = map(str,input().split())  # string = 숫자열,  N = 변경하는 횟수
-    N = int(N)
-    max_val = 0
-    visited = [0]*len(string)
-    cont = 0  # 시도 횟수
+for tc in range(1, T + 1):
+    nums, swap_cnt = input().split()
+    nums = list(map(int, nums))
+    swap_cnt = int(swap_cnt)       # 바꿀 수 있는 횟수
+    N = len(nums)      # 길이
+    visit = [[] for _ in range(swap_cnt + 1)]
+    ans = 0
 
-    kfc(0,0,0)
+    def find_max(k):
+        global ans
+        val = int(''.join(map(str, nums)))
 
-    print(f'#{tc} {max_val}')
+        if val in visit[k]:
+            return
+
+        visit[k].append(val)
+
+        if k == swap_cnt:
+            ans = max(ans, val)
+
+        else:
+            for i in range(N -  1):
+                for j in range(i + 1, N):
+                    nums[i], nums[j] = nums[j], nums[i]
+                    # ==========================================
+                    find_max(k + 1)
+                    # ==========================================
+                    nums[i], nums[j] = nums[j], nums[i]
+
+    find_max(0)
+    print(f'#{tc} {ans}')
