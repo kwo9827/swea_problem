@@ -1,31 +1,27 @@
-# 현재 (r,c) 위 퀸을 두는 선택
-# cols[0...k-1]: 이전의 퀸에 대한 선택
-
-def notPossible(cols,r,c):
-
-    pass
 
 
-N = 4
-visit = [0] * N  # 순열에서 중복
-cols = [0] * N  # 순서를 기록
-# cols[0]  <- 0번행에서 열의 위치
+arr = [(6, 0), (3, 3), (-7, 2), (-4, -1)]  # 지렁이들의 좌표
+N = len(arr) // 2  # 매칭할 쌍의 수
 
-def nQueen(k):
-    if k == N:
-        print(cols)
+def kfc(start, level, used, path):
+    if level == N:  # 필요한 쌍을 다 골랐다면
+        remaining = [arr[i] for i in range(len(arr)) if not used[i]]  # 남은 지렁이들
+        path.append(remaining)  # 남은 지렁이들로 만들어진 쌍 추가
+        print(path)  # 현재 매칭된 쌍들을 출력
+        path.pop()
+        return
 
-    else:
-        for i in range(N):
-            if visit[i]:
-                continue
-            #k번 행에 열의 위치를 i로 선택하는 과정
-            if notPossible(cols, k, i):
-                continue
+    for i in range(start, len(arr)):
+        if not used[i]:
+            for j in range(i + 1, len(arr)):
+                if not used[j]:
+                    # i와 j를 매칭시키고
+                    used[i] = used[j] = True
+                    path.append([arr[i], arr[j]])
+                    kfc(i + 1, level + 1, used, path)
+                    # 백트래킹: 선택 취소
+                    path.pop()
+                    used[i] = used[j] = False
 
-            visit[i] = 1
-            cols[k] = i
-            nQueen(k+1)
-            visit[i] = 0
-
-nQueen(0)
+used = [False] * len(arr)
+kfc(0, 0, used, [])
