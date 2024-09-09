@@ -1,27 +1,44 @@
+import sys
+sys.stdin = open('input.txt')
+
+from collections import deque
+
+def bfs(start_x,start_y):
+    global N, M, arr, visited
+    queue = deque([(start_x, start_y, 0)])
+    visited[start_x][start_y] = 1
+
+    dr = [1,0,-1,0]
+    dc = [0,1,0,-1]
+
+    max_dist = 0
+
+    while queue:
+        x, y, dist = queue.popleft()
+
+        if dist > max_dist:
+            max_dist = dist
+
+        for k in range(4):
+            nr = r + dr[k]
+            nc = c + dc[k]
+
+            if 0<= nr < N and 0<= nc < M and arr[nr][nc] == 'L' and not visited[nr][nc]:
+                visited[nr][nc] = 1
+                queue.append((nr,nc,dist+1))
+
+    return max_dist
 
 
-arr = [(6, 0), (3, 3), (-7, 2), (-4, -1)]  # 지렁이들의 좌표
-N = len(arr) // 2  # 매칭할 쌍의 수
+N, M = map(int,input().split())
+arr = [list(map(str,input())) for _ in range(N)]
 
-def kfc(start, level, used, path):
-    if level == N:  # 필요한 쌍을 다 골랐다면
-        remaining = [arr[i] for i in range(len(arr)) if not used[i]]  # 남은 지렁이들
-        path.append(remaining)  # 남은 지렁이들로 만들어진 쌍 추가
-        print(path)  # 현재 매칭된 쌍들을 출력
-        path.pop()
-        return
+max_distance = 0
 
-    for i in range(start, len(arr)):
-        if not used[i]:
-            for j in range(i + 1, len(arr)):
-                if not used[j]:
-                    # i와 j를 매칭시키고
-                    used[i] = used[j] = True
-                    path.append([arr[i], arr[j]])
-                    kfc(i + 1, level + 1, used, path)
-                    # 백트래킹: 선택 취소
-                    path.pop()
-                    used[i] = used[j] = False
+for r in range(N):
+    for c in range(M):
+        if arr[r][c] == 'L':
+            visited = [[0] * M for _ in range(M)]
+            max_distance = max(max_distance, bfs(r,c))
 
-used = [False] * len(arr)
-kfc(0, 0, used, [])
+print(max_distance)
