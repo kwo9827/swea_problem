@@ -11,8 +11,6 @@ def dfs(v):
     cont += 1
     dfs(R[v])
 
-
-
 T = int(input())
 
 for tc in range(1,T+1):
